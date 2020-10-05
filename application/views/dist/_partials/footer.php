@@ -13,3 +13,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   </div>
 
 <?php $this->load->view('dist/_partials/js'); ?>
+  <!-- Modal SweetAlert -->
+  <script type="text/javascript">
+  	<?php if (!empty($this->session->flashdata('success')) || !empty($this->session->flashdata('error')) || !empty($this->session->flashdata('warning')) || !empty($this->session->flashdata('info'))) { ?>
+    $(document).ready(function() {
+        swal('Sukses', '<?= $this->session->flashdata('success') ?>', 'success');
+    });
+<?php } ?>
+  </script>
+  <!-- End of Modal SweetAlert -->

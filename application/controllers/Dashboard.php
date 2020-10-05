@@ -42,9 +42,44 @@ class Dashboard extends CI_Controller {
 		if ($action == 'edit_user' && $id_user == null) {redirect(base_url('dashboard/userprivilege'),'refresh');}
 		if ($action == 'edit_access' && empty($this->input->post('access_id'))) {redirect(base_url('dashboard/userprivilege'),'refresh');}
 
+		//add new user
+		if (!empty($this->input->post('add_users_lvl_access'))) {
+			$data = array(
+				'users_id' 			=> $this->uuid->v6(),
+				'users_fullname' 	=> $this->input->post('user_fullname'),
+				'users_name' 		=> $this->input->post('username'),
+				'users_pass' 		=> $this->input->post('password'),
+				'users_access' 		=> $this->input->post('add_users_lvl_access')
+			);
+			$this->db->insert('users', $data);
+			$this->session->set_flashdata('success', "Sukses Menambahkan Data");
+			redirect(base_url("dashboard/userprivilege"),'refresh');
+		}
+
+		//add new access
+		if (!empty($this->input->post('add_new_access_lvl_name'))) {
+			$i = 0;
+			foreach ($this->db->get('site_feature')->result() as $key) {
+				if (!empty($this->input->post($key->feature_name))) {
+					$field_data_post[$i] = $this->input->post($key->feature_name);
+					$i++;
+				}
+			}
+
+			$data['lvl_id']			= $this->uuid->v6();
+			$data['lvl_desc']		= json_encode($field_data_post);
+			$data['lvl_name']		= $this->input->post('add_new_access_lvl_name');
+
+			$this->db->insert('users_lvl_access', $data);
+			$this->session->set_flashdata('success', "Sukses Menambahkan Data");
+			redirect(base_url("dashboard/userprivilege"),'refresh');
+		}
+
 		//update user level
 		if (!empty($this->input->post('users_lvl_access'))) {
 			$this->data_model->update('users',array('users_access' => $this->input->post("users_lvl_access")),array('users_id' => $this->input->post("user_id")));
+			$this->session->set_flashdata('success', "Sukses Memperbarui Data");
+			redirect(base_url("dashboard/userprivilege"),'refresh');
 		}
 		//update access level
 		if (!empty($this->input->post('access_id_update'))) {
@@ -56,6 +91,8 @@ class Dashboard extends CI_Controller {
 				}
 			}
 			$this->data_model->update('users_lvl_access',array('lvl_desc' => json_encode($field_data_post)),array('lvl_id' => $this->input->post("access_id_update")));
+			$this->session->set_flashdata('success', "Sukses Memperbarui Data");
+			redirect(base_url("dashboard/userprivilege"),'refresh');
 		}
 
 		//data page
