@@ -44,7 +44,7 @@ class website extends CI_Model
 		return $result_rtn;
     }
 
-    public function privelege($data=null)
+    public function privilege($data=null)
     {
 		$basisdata = $this->db->get_where('users_lvl_access',array('users_access' => $data));
 		foreach ($basisdata->result() as $row) {
@@ -58,9 +58,9 @@ class website extends CI_Model
 
 	public function access($url=null,$url2=null)
 	{
-		$json_data = $this->privelege($this->session->userdata('login')['user_lvl']);
-		$json_data = json_decode($json_data);
-		$access = false;
+		$json_data 	= $this->privilege($this->db->get_where('users',array('users_name' =>$this->session->userdata('login')['username']))->result_array()[0]['users_access']);
+		$json_data 	= json_decode($json_data);
+		$access 	= false;
 		foreach ($json_data as $key => $value) {
 		  if ($url2 == null) {
 		    if ($url == $value) {
@@ -69,6 +69,19 @@ class website extends CI_Model
 		  } elseif ($url2 == $value) {
 		    $access = true;
 		  }
+		}
+		return $access;
+    }
+
+	public function access_link($url=null)
+	{
+		$json_data 	= $this->privilege($this->db->get_where('users',array('users_name' =>$this->session->userdata('login')['username']))->result_array()[0]['users_access']);
+		$json_data 	= json_decode($json_data);
+		$access 	= false;
+		foreach ($json_data as $key => $value) {
+		    if ($url == $value) {
+		     $access = true;
+		    }
 		}
 		return $access;
     }

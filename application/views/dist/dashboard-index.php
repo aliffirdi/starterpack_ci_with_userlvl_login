@@ -68,6 +68,18 @@ $this->load->view('dist/_partials/header');
                   </div>
                 </div>
               </div>
+            </div>   
+            <div class="col-lg-12">
+              <div class="card">
+                <div class="card-wrap">
+                  <div class="card-header">
+                    <h4>TOKEN GENERATOR</h4>
+                  </div>
+                  <div class="card-body">
+                    <?= $this->uuid->v6(); ?>
+                  </div>
+                </div>
+              </div>
             </div>                  
           </div>
         </section>
