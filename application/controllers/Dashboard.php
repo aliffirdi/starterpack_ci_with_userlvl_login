@@ -142,7 +142,7 @@ class Dashboard extends CI_Controller {
 		$data['copyright'] = $this->lang->line('copyright');
 		$data['base_url'] = base_url();
 		$data['tahun'] = date('Y');
-		//Kint::dump($data);
+		
 		$this->parser->parse('dist/dashboard-settings', $data);
 	}
 
@@ -156,5 +156,9 @@ class Dashboard extends CI_Controller {
 			'tahun' 			=> date('Y')
 		);
 		$this->parser->parse('dist/dashboard-credits', $data);
+	}
+
+	public function test() {
+		Kint::dump($this->mail_model->send('halo@aliffirdi.me','Alif Firdi','Tes Notifikasi Subject','ini adalah email percobaan'));
 	}
 }

@@ -132,4 +132,4 @@ $autoload['language'] = array('sms_sekolah');
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array('data_model', 'website');
+$autoload['model'] = array('data_model', 'mail_model', 'website');

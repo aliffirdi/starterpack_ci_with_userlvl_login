@@ -4,7 +4,7 @@ SMS Sekolah App:
         ✔ create user privilege @done(20-10-06 16:12)
         ✔ create site general setting @done(20-10-06 16:12)
         ☐ create app setting
-        ☐ create mail svr connection @started(20-10-06 16:13)
+        ✔ create mail svr connection @started(20-10-06 16:13) @done(20-10-06 19:01) @lasted(2h48m1s)
         ☐ create notification to mail
     BUG:
         ✔ @low sidebar active sign not work @done(20-10-06 16:21)
@@ -13,6 +13,9 @@ SMS Sekolah App:
 Plugin to install:
     ☐ chrome inspector
     
+Noted:
+    ✔ link to allow google security (https://myaccount.google.com/lesssecureapps) or (https://myaccount.google.com/security) @done(20-10-06 18:35)
+
 How Todo Work:
     Projects:
     ☐ Anything with a colon at the end of the line is a project
