@@ -48,7 +48,7 @@ class Dashboard extends CI_Controller {
 				'users_id' 			=> $this->uuid->v6(),
 				'users_fullname' 	=> $this->input->post('user_fullname'),
 				'users_name' 		=> $this->input->post('username'),
-				'users_pass' 		=> $this->input->post('password'),
+				'users_pass' 		=> password_hash($this->input->post('password'), PASSWORD_BCRYPT),
 				'users_access' 		=> $this->input->post('add_users_lvl_access')
 			);
 			$this->db->insert('users', $data);
