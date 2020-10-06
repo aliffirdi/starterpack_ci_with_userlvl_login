@@ -127,12 +127,10 @@ class Dashboard extends CI_Controller {
 	public function settings() {
 		if (!empty($this->input->post('app_name'))) {
 			$basisdata = $this->data_model->get('site_options');
-			$i = 1;
 			foreach ($basisdata->result() as $row) {
 				if (!empty($this->input->post($row->option_name))) {
-					$this->data_model->update('site_options',array('option_value' => $this->input->post($row->option_name)),array('option_id' => $i ));
+					$this->data_model->update('site_options',array('option_value' => $this->input->post($row->option_name)),array('option_name' => $row->option_name ));
 				}
-				$i++;
 			}
 		}
 

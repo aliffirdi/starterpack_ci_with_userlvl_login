@@ -16,7 +16,7 @@ $this->load->view('dist/_partials/header');
 
           <div class="section-body">
             <h2 class="section-title">Privileges Edit</h2>
-{basisdata}
+            {basisdata}
             <div class="row">
               <div class="col-12">
                 <div class="card">
@@ -47,7 +47,7 @@ $this->load->view('dist/_partials/header');
                 </div>
               </div>
             </div>
-{/basisdata}
+            {/basisdata}
           </div>
         </section>
       </div>
