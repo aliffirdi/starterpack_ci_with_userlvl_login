@@ -17,8 +17,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <script type="text/javascript">
   	<?php if (!empty($this->session->flashdata('success')) || !empty($this->session->flashdata('error')) || !empty($this->session->flashdata('warning')) || !empty($this->session->flashdata('info'))) { ?>
     $(document).ready(function() {
-        swal('Sukses', '<?= $this->session->flashdata('success') ?>', 'success');
+        swal(
+          '<?php if (!empty($this->session->flashdata('error'))) {echo "Error";} elseif (!empty($this->session->flashdata('warning'))) {echo "Warning";} elseif (!empty($this->session->flashdata('info'))) {echo "Info";} else {echo "Sukses";} ?>',
+          '<?= $this->session->flashdata('success'); ?><?= $this->session->flashdata('error'); ?><?= $this->session->flashdata('warning'); ?><?= $this->session->flashdata('info'); ?>',
+          '<?php if (!empty($this->session->flashdata('error'))) {echo "error";} elseif (!empty($this->session->flashdata('warning'))) {echo "warning";} elseif (!empty($this->session->flashdata('info'))) {echo "info";} else {echo "success";} ?>'
+          );
     });
-<?php } ?>
+    <?php } ?>
   </script>
   <!-- End of Modal SweetAlert -->

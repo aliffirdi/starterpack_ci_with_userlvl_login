@@ -51,8 +51,12 @@ class Dashboard extends CI_Controller {
 				'users_pass' 		=> password_hash($this->input->post('password'), PASSWORD_BCRYPT),
 				'users_access' 		=> $this->input->post('add_users_lvl_access')
 			);
-			$this->db->insert('users', $data);
-			$this->session->set_flashdata('success', "Sukses Menambahkan Data");
+			if (!$this->data_model->insert('users', $data)) {
+				$sess_notif = array ('error' => "Username Sudah Ada!");
+			} else {
+				$sess_notif = array ('success' => "Sukses Menambahkan Data");
+			}
+			$this->session->set_flashdata($sess_notif);
 			redirect(base_url("dashboard/userprivilege"),'refresh');
 		}
 
@@ -70,8 +74,12 @@ class Dashboard extends CI_Controller {
 			$data['lvl_desc']		= json_encode($field_data_post);
 			$data['lvl_name']		= $this->input->post('add_new_access_lvl_name');
 
-			$this->db->insert('users_lvl_access', $data);
-			$this->session->set_flashdata('success', "Sukses Menambahkan Data");
+			if (!$this->data_model->insert('users_lvl_access', $data)) {
+				$sess_notif = array ('error' => "Hak Akses Sudah Ada!");
+			} else {
+				$sess_notif = array ('success' => "Sukses Menambahkan Data");
+			}
+			$this->session->set_flashdata($sess_notif);
 			redirect(base_url("dashboard/userprivilege"),'refresh');
 		}
 
@@ -124,26 +132,70 @@ class Dashboard extends CI_Controller {
 		}
 	}
 
-	public function settings() {
-		if (!empty($this->input->post('app_name'))) {
-			$basisdata = $this->data_model->get('site_options');
-			foreach ($basisdata->result() as $row) {
-				if (!empty($this->input->post($row->option_name))) {
-					$this->data_model->update('site_options',array('option_value' => $this->input->post($row->option_name)),array('option_name' => $row->option_name ));
+	public function pagesetup($action=null) {
+
+		if ($action == null) {
+			$data['title'] 					= $this->website->title("settings");
+			$data['app_name']				= $this->website->option('app_name');
+			$data['get_csrf_token_name'] 	= $this->security->get_csrf_token_name();
+			$data['get_csrf_hash'] 			= $this->security->get_csrf_hash();
+			$data['copyright'] 				= $this->lang->line('copyright');
+			$data['base_url'] 				= base_url();
+			$data['tahun'] 					= date('Y');
+
+			$this->parser->parse('dist/dashboard-app-settings', $data);
+
+		} elseif ($action == "general_settings") {
+			if (!empty($this->input->post('app_name'))) {
+				$basisdata = $this->data_model->get('site_options');
+				foreach ($basisdata->result() as $row) {
+					if (!empty($this->input->post($row->option_name))) {
+						$this->data_model->update('site_options',array('option_value' => $this->input->post($row->option_name)),array('option_name' => $row->option_name ));
+					}
 				}
+				$this->session->set_flashdata('success', "Sukses Memperbarui Data");
+				redirect(base_url("dashboard/pagesetup/".$this->uri->segment(3)),'refresh');
 			}
+	
+			$basisdata = $this->data_model->ketika('site_options', array("option_url" => $this->uri->segment(3)));
+			foreach ($basisdata->result() as $row) {$data[$row->option_name] = $row->option_value;}
+			$data['title'] = $this->website->title("settings");
+			$data['get_csrf_token_name'] = $this->security->get_csrf_token_name();
+			$data['get_csrf_hash'] = $this->security->get_csrf_hash();
+			$data['copyright'] = $this->lang->line('copyright');
+			$data['base_url'] = base_url();
+			$data['tahun'] = date('Y');
+	
+			$this->parser->parse('dist/dashboard-settings', $data);
+
+		} elseif ($action == "email") {
+			if (!empty($this->input->post('app_name'))) {
+				$basisdata = $this->data_model->get('site_options');
+				foreach ($basisdata->result() as $row) {
+					if (!empty($this->input->post($row->option_name))) {
+						$this->data_model->update('site_options',array('option_value' => $this->input->post($row->option_name)),array('option_name' => $row->option_name ));
+					}
+				}
+				$this->session->set_flashdata('success', "Sukses Memperbarui Data");
+				redirect(base_url("dashboard/pagesetup/".$this->uri->segment(3)),'refresh');
+			}
+	
+			$basisdata = $this->data_model->ketika('site_options', array("option_url" => $this->uri->segment(3)));
+			foreach ($basisdata->result() as $row) {$data[$row->option_name] = $row->option_value;}
+			$data['title'] = $this->website->title("settings");
+			$data['get_csrf_token_name'] = $this->security->get_csrf_token_name();
+			$data['get_csrf_hash'] = $this->security->get_csrf_hash();
+			$data['copyright'] = $this->lang->line('copyright');
+			$data['base_url'] = base_url();
+			$data['tahun'] = date('Y');
+	
+			$this->parser->parse('dist/dashboard-settings', $data);
 		}
 
-		$basisdata = $this->data_model->get('site_options');
-		foreach ($basisdata->result() as $row) {$data[$row->option_name] = $row->option_value;}
-		$data['title'] = $this->website->title("settings");
-		$data['get_csrf_token_name'] = $this->security->get_csrf_token_name();
-		$data['get_csrf_hash'] = $this->security->get_csrf_hash();
-		$data['copyright'] = $this->lang->line('copyright');
-		$data['base_url'] = base_url();
-		$data['tahun'] = date('Y');
+	}
+
+	public function settings() {
 		
-		$this->parser->parse('dist/dashboard-settings', $data);
 	}
 
 	public function credits() {

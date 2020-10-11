@@ -20,15 +20,39 @@
 class data_model extends CI_Model{
 	function get($data)
 	{
-		return $this->db->get($data);
+		$db_debug 			= $this->db->db_debug;
+		$this->db->db_debug = FALSE;
+		$result				= $this->db->get($data);
+		$this->db->db_debug = $db_debug;
+
+		return $result;
 	}
 	function ketika($db,$data)
 	{
-		return $this->db->get_where($db,$data);
+		$db_debug 			= $this->db->db_debug;
+		$this->db->db_debug = FALSE;
+		$result 			= $this->db->get_where($db,$data);
+		$this->db->db_debug = $db_debug;
+
+		return $result;
 	}
 	function update($db,$data,$syarat)
 	{
-		return $this->db->update($db, $data, $syarat);
+		$db_debug 			= $this->db->db_debug;
+		$this->db->db_debug = FALSE;
+		$result 			= $this->db->update($db, $data, $syarat);
+		$this->db->db_debug = $db_debug;
+
+		return $result;
+	}
+	function insert($db,$data)
+	{
+		$db_debug 			= $this->db->db_debug;
+		$this->db->db_debug = FALSE;
+		$result 			= $this->db->insert($db, $data);
+		$this->db->db_debug = $db_debug;
+
+		return $result;
 	}
 	function delete($db,$data)
 	{

@@ -97,3 +97,25 @@ $this->load->view('dist/_partials/header');
   </div>
 
 <?php $this->load->view('dist/_partials/js'); ?>
+<script>
+  	<?php if (!empty($this->session->flashdata('select_language'))) { ?>
+    $(document).ready(function() {
+      swal({
+          title: 'Select Your Language',
+          text: 'Once deleted, you will not be able to recover this imaginary file!',
+          icon: 'warning',
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+          swal('Poof! Your imaginary file has been deleted!', {
+            icon: 'success',
+          });
+          } else {
+          swal('Your imaginary file is safe!');
+          }
+        });
+    });
+<?php } ?>
+</script>

@@ -4,6 +4,7 @@ SMS Sekolah App:
         ✔ create user privilege @done(20-10-06 16:12)
         ✔ create site general setting @done(20-10-06 16:12)
         ☐ create app setting
+            ☐ menu app
         ✔ create mail svr connection @started(20-10-06 16:13) @done(20-10-06 19:01) @lasted(2h48m1s)
         ☐ create notification to mail
     BUG:

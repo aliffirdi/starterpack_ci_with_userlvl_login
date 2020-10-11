@@ -394,7 +394,7 @@ $config['encryption_key'] = hex2bin('79c9fdd325090eb2c5431528d65dcf80');
 |
 */
 $config['sess_driver'] = 'files';
-$config['sess_cookie_name'] = 'sikejo_cookie';
+$config['sess_cookie_name'] = 'aliffirdi_cookie';
 $config['sess_expiration'] = 7200;
 $config['sess_save_path'] = NULL;
 $config['sess_match_ip'] = FALSE;

@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
   
   <!-- JS Libraies -->
+  <script src="<?php echo base_url(); ?>assets/modules/sweetalert/sweetalert.min.js"></script>
 <?php
 if ($this->uri->segment(1) == "" || $this->uri->segment(1) == "dashboard") { ?>
   <script src="<?php echo base_url(); ?>assets/modules/jquery.sparkline.min.js"></script>

@@ -26,7 +26,7 @@ $this->load->view('dist/_partials/header');
                     <form method="POST" accept-charset="utf-8">
                       <input type="hidden" name="{get_csrf_token_name}" value="{get_csrf_hash}">
                     <?php
-                    $basisdata = $this->data_model->get('site_options');
+                    $basisdata = $this->data_model->ketika('site_options', array("option_url" => $this->uri->segment(3)));
                     $i = 1;
                     foreach ($basisdata->result() as $row) { ?>
                       <div class="form-group">

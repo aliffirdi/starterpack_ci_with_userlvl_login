@@ -5,6 +5,13 @@ class Auth extends CI_Controller {
 	function __construct(){
 			parent::__construct();
 			$this->load->model('auth_model');
+			if (empty($this->session->get_userdata('language')['language'])) {
+				$this->session->set_userdata('language','english');
+				$this->session->set_flashdata('select_language','select_language');
+			}
+			$idiom = $this->session->get_userdata('language')['language'];
+			$this->session->unset_userdata('language');
+			$this->lang->load('global_var', $idiom);
 		}
 
 	public function index() {
@@ -12,7 +19,6 @@ class Auth extends CI_Controller {
 			
 			$username	= $this->input->post('username');
 			$pass 		= $this->input->post('password');
-			//die(password_hash("1", PASSWORD_BCRYPT));
 			
 			$data = array(
 				'users_name' => $username
