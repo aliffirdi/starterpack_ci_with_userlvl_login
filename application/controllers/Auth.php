@@ -27,7 +27,7 @@ class Auth extends CI_Controller {
 			$data_post 		= $this->auth_model->login($data)->row_object();
 			
 			if ($data_post != null) {
-					$verification 	= $this->auth_model->login($data)->row_object()->verification;
+					//$verification 	= $this->auth_model->login($data)->row_object()->verification;
 					$data_post		= array(
 							'id' 			=> $data_post->users_id,
 							'fullname'		=> $data_post->users_fullname,

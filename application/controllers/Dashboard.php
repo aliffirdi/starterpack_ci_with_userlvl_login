@@ -159,12 +159,13 @@ class Dashboard extends CI_Controller {
 	
 			$basisdata = $this->data_model->ketika('site_options', array("option_url" => $this->uri->segment(3)));
 			foreach ($basisdata->result() as $row) {$data[$row->option_name] = $row->option_value;}
-			$data['title'] = $this->website->title("settings");
-			$data['get_csrf_token_name'] = $this->security->get_csrf_token_name();
-			$data['get_csrf_hash'] = $this->security->get_csrf_hash();
-			$data['copyright'] = $this->lang->line('copyright');
-			$data['base_url'] = base_url();
-			$data['tahun'] = date('Y');
+			$data['title'] 					= $this->website->title("settings");
+			$data['app_name']				= $this->website->option('app_name');
+			$data['get_csrf_token_name'] 	= $this->security->get_csrf_token_name();
+			$data['get_csrf_hash'] 			= $this->security->get_csrf_hash();
+			$data['copyright'] 				= $this->lang->line('copyright');
+			$data['base_url']		 		= base_url();
+			$data['tahun'] 					= date('Y');
 	
 			$this->parser->parse('dist/dashboard-settings', $data);
 
@@ -182,12 +183,13 @@ class Dashboard extends CI_Controller {
 	
 			$basisdata = $this->data_model->ketika('site_options', array("option_url" => $this->uri->segment(3)));
 			foreach ($basisdata->result() as $row) {$data[$row->option_name] = $row->option_value;}
-			$data['title'] = $this->website->title("settings");
-			$data['get_csrf_token_name'] = $this->security->get_csrf_token_name();
-			$data['get_csrf_hash'] = $this->security->get_csrf_hash();
-			$data['copyright'] = $this->lang->line('copyright');
-			$data['base_url'] = base_url();
-			$data['tahun'] = date('Y');
+			$data['title'] 					= $this->website->title("settings");
+			$data['app_name']				= $this->website->option('app_name');
+			$data['get_csrf_token_name'] 	= $this->security->get_csrf_token_name();
+			$data['get_csrf_hash'] 			= $this->security->get_csrf_hash();
+			$data['copyright'] 				= $this->lang->line('copyright');
+			$data['base_url'] 				= base_url();
+			$data['tahun'] 					= date('Y');
 	
 			$this->parser->parse('dist/dashboard-settings', $data);
 		}
