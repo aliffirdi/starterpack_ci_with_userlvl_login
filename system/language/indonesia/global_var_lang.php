@@ -21,3 +21,15 @@ $lang['login_pass_wrong_msg']		= 'Nama pengguna atau Katasandi yang anda masukan
 $lang['login_belum_login']			= 'Silahkan login terlebih dahulu!.';
 $lang['login_after_logout']			= 'Sukses keluar dari aplikasi';
 //end form login//
+
+//form register//
+$lang['register']					= 'Daftar';
+$lang['register_first_name']		= 'Nama Depan';
+$lang['register_last_name']			= 'Nama Belakang';
+$lang['register_username']			= 'Nama Pengguna';
+$lang['register_email']				= 'Surel / Email';
+$lang['register_y_country']			= 'Negara Asal';
+$lang['register_country']			= 'Negara';
+$lang['register_prov']				= 'Provinsi';
+$lang['register_agree']				= 'Saya setuju dengan syarat dan ketentuan';
+//end form register//

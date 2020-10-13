@@ -12,13 +12,13 @@ $this->load->view('dist/_partials/header');
               <img src="{base_url}assets/img/stisla-fill.svg" alt="logo" width="100" class="shadow-light rounded-circle">
             </div>
             
-            <?php if (!empty($this->session->flashdata('error')) || !empty($this->session->flashdata('warning')) || !empty($this->session->flashdata('info'))) { ?>
+            <?php if (!empty($this->session->flashdata('error')) || !empty($this->session->flashdata('warning')) || !empty($this->session->flashdata('info')) || !empty($this->session->flashdata('success'))) { ?>
             <!--Login_alert-->
             <div class="alert alert-<?php if (!empty($this->session->flashdata('error'))) {echo "danger";} elseif (!empty($this->session->flashdata('warning'))) {echo "warning";} elseif (!empty($this->session->flashdata('info'))) {echo "info";} else {echo "success";} ?> alert-has-icon">
               <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
               <div class="alert-body">
                 <div class="alert-title">{login_alert}</div>
-                {error} {warning} {info}
+                {error} {warning} {info} {success}
               </div>
             </div>
             <!--End Of Login_alert-->

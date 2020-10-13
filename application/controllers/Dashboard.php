@@ -159,7 +159,7 @@ class Dashboard extends CI_Controller {
 	
 			$basisdata = $this->data_model->ketika('site_options', array("option_url" => $this->uri->segment(3)));
 			foreach ($basisdata->result() as $row) {$data[$row->option_name] = $row->option_value;}
-			$data['title'] 					= $this->website->title("settings");
+			$data['title'] 					= $this->website->title("pagesetup");
 			$data['app_name']				= $this->website->option('app_name');
 			$data['get_csrf_token_name'] 	= $this->security->get_csrf_token_name();
 			$data['get_csrf_hash'] 			= $this->security->get_csrf_hash();
@@ -167,7 +167,7 @@ class Dashboard extends CI_Controller {
 			$data['base_url']		 		= base_url();
 			$data['tahun'] 					= date('Y');
 	
-			$this->parser->parse('dist/dashboard-settings', $data);
+			$this->parser->parse('dist/dashboard-app-settings-general', $data);
 
 		} elseif ($action == "email") {
 			if (!empty($this->input->post('app_name'))) {
@@ -183,7 +183,7 @@ class Dashboard extends CI_Controller {
 	
 			$basisdata = $this->data_model->ketika('site_options', array("option_url" => $this->uri->segment(3)));
 			foreach ($basisdata->result() as $row) {$data[$row->option_name] = $row->option_value;}
-			$data['title'] 					= $this->website->title("settings");
+			$data['title'] 					= $this->website->title("pagesetup");
 			$data['app_name']				= $this->website->option('app_name');
 			$data['get_csrf_token_name'] 	= $this->security->get_csrf_token_name();
 			$data['get_csrf_hash'] 			= $this->security->get_csrf_hash();
@@ -197,7 +197,70 @@ class Dashboard extends CI_Controller {
 	}
 
 	public function settings() {
-		
+		if (!empty($this->input->post('username'))) {
+			//cek username session untuk mencocokan data
+			$check_username_sess = $this->session->userdata('login')['username'];
+			//cek username data dari db
+			if (isset($this->db->get_where('users', array('users_name' => $this->input->post('username')))->result_array()[0]['users_name'])) {
+				$check_username = $this->db->get_where('users', array('users_name' => $this->input->post('username')))->result_array()[0]['users_name'];
+			} else {
+				$check_username = null;
+			}
+			//cek apakah username sudah terpakai oleh orang lain
+			if (!empty($check_username)) {
+				$user_name_update = $this->db->get_where('users', array('users_name' => $this->session->userdata('login')['username'] ))->result_array()[0]["users_name"];
+			} else {
+				$user_name_update = $this->input->post('username');
+			}
+			//data yang akan dientry ke db
+			$dp_user_bio = array(
+				'bio_username' 	=> $user_name_update,
+				'bio_firstname' => $this->input->post('firstname'),
+				'bio_lastname' 	=> $this->input->post('lastname'),
+				'bio_country' 	=> $this->input->post('country'),
+				'bio_province' 	=> $this->input->post('province'),
+				'bio_city' 		=> $this->input->post('city')
+				);
+			$dp_user['users_name'] = $user_name_update;
+			$dp_user['users_fullname'] = $this->input->post('firstname')." ".$this->input->post('lastname');
+			if (!empty($this->input->post('password'))) {$dp_user['users_pass'] = password_hash($this->input->post('password'), PASSWORD_BCRYPT);}
+			$data_session = array(
+					'id' 			=> $this->db->get_where('users', array('users_name' => $this->session->userdata('login')['username'] ))->result_array()[0]["users_id"],
+					'fullname' 		=> $this->input->post('firstname')." ".$this->input->post('lastname'),
+					'username' 		=> $user_name_update,
+					'user_lvl' 		=> $this->db->get_where('users', array('users_name' => $this->session->userdata('login')['username'] ))->result_array()[0]["users_access"],
+					'user_pass' 	=> $this->db->get_where('users', array('users_name' => $this->session->userdata('login')['username'] ))->result_array()[0]["users_pass"],
+					'time_login' 	=> date('YmdHis'),
+					);
+			//kirim data ke db
+			$this->db->update('users_biodata', $dp_user_bio, array('bio_id' => $this->db->join('users_biodata',"users_biodata.bio_username=users.users_name")->get_where('users', array('users_name' => $this->session->userdata('login')['username'] ))->result_array()[0]["bio_id"] ));
+			$this->db->update('users', $dp_user, array('users_id' => $this->session->userdata('login')['id'] ));
+			//update session
+			$this->session->set_userdata('login', $data_session);
+
+			//notifikasi
+			if (!empty($check_username)) {
+				if ($check_username != $check_username_sess) {
+					$this->session->set_flashdata('warning', "Username Sudah Terpakai oleh user lain!.");
+					redirect(base_url("dashboard/settings"),'refresh');
+				} else {
+					$this->session->set_flashdata('success', "Sukses Memperbarui Data");
+					redirect(base_url("dashboard/settings"),'refresh');
+				}
+			} else {
+				$this->session->set_flashdata('success', "Sukses Memperbarui Data");
+				redirect(base_url("dashboard/settings"),'refresh');
+			}
+		}
+		$data['title'] 					= $this->website->title("settings");
+		$data['app_name']				= $this->website->option('app_name');
+		$data['get_csrf_token_name'] 	= $this->security->get_csrf_token_name();
+		$data['get_csrf_hash'] 			= $this->security->get_csrf_hash();
+		$data['copyright'] 				= $this->lang->line('copyright');
+		$data['base_url']		 		= base_url();
+		$data['tahun'] 					= date('Y');
+
+		$this->parser->parse('dist/dashboard-settings', $data);
 	}
 
 	public function credits() {

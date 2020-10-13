@@ -21,3 +21,15 @@ $lang['login_pass_wrong_msg']		= 'Username Or Password Wrong!.';
 $lang['login_belum_login']			= 'Login First!.';
 $lang['login_after_logout']			= 'Logout Succesfull';
 //end form login//
+
+//form register//
+$lang['register']					= 'Register';
+$lang['register_first_name']		= 'First Name';
+$lang['register_last_name']			= 'Last Name';
+$lang['register_username']			= 'Username';
+$lang['register_email']				= 'Email';
+$lang['register_y_country']			= 'Your Country';
+$lang['register_country']			= 'Country';
+$lang['register_prov']				= 'Province / Prefecture';
+$lang['register_agree']				= 'I agree with the terms and conditions';
+//end form register//

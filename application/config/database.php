@@ -75,10 +75,14 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '65.19.141.67',
-	'username' => 'alfi_root',
+	// 'hostname' => '65.19.141.67',
+	// 'username' => 'alfi_root',
+	// 'password' => 'password',
+	// 'database' => 'alfi_bipa_db',
+	'hostname' => 'localhost',
+	'username' => 'root',
 	'password' => 'password',
-	'database' => 'alfi_bipa_db',
+	'database' => 'bipa_DB',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

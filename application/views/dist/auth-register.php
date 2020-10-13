@@ -12,87 +12,75 @@ $this->load->view('dist/_partials/header');
               <img src="<?php echo base_url(); ?>assets/img/stisla-fill.svg" alt="logo" width="100" class="shadow-light rounded-circle">
             </div>
 
+            <?php if (!empty($this->session->flashdata('error')) || !empty($this->session->flashdata('warning')) || !empty($this->session->flashdata('info')) || !empty($this->session->flashdata('success'))) { ?>
+            <!--Register_alert-->
+            <div class="alert alert-<?php if (!empty($this->session->flashdata('error'))) {echo "danger";} elseif (!empty($this->session->flashdata('warning'))) {echo "warning";} elseif (!empty($this->session->flashdata('info'))) {echo "info";} else {echo "success";} ?> alert-has-icon">
+              <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
+              <div class="alert-body">
+                <div class="alert-title">{login_alert}</div>
+                {error} {warning} {info} {success}
+              </div>
+            </div>
+            <!--End Of Register_alert-->
+            <?php } ?>
+
             <div class="card card-primary">
-              <div class="card-header"><h4>Register</h4></div>
+              <div class="card-header"><h4>{register}</h4></div>
 
               <div class="card-body">
                 <form method="POST">
                   <div class="row">
+                    <input type="hidden" name="{get_csrf_token_name}" value="{get_csrf_hash}">
                     <div class="form-group col-6">
-                      <label for="frist_name">First Name</label>
-                      <input id="frist_name" type="text" class="form-control" name="frist_name" autofocus>
+                      <label for="first_name">{register_first_name}</label>
+                      <input required id="first_name" type="text" class="form-control" name="first_name" autofocus>
                     </div>
                     <div class="form-group col-6">
-                      <label for="last_name">Last Name</label>
-                      <input id="last_name" type="text" class="form-control" name="last_name">
+                      <label for="last_name">{register_last_name}</label>
+                      <input required id="last_name" type="text" class="form-control" name="last_name">
                     </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="email">Email</label>
-                    <input id="email" type="email" class="form-control" name="email">
+                    <label for="username">{register_username}</label>
+                    <input required id="username" type="text" class="form-control" name="username">
                     <div class="invalid-feedback">
                     </div>
                   </div>
 
-                  <div class="row">
-                    <div class="form-group col-6">
-                      <label for="password" class="d-block">Password</label>
-                      <input id="password" type="password" class="form-control pwstrength" data-indicator="pwindicator" name="password">
-                      <div id="pwindicator" class="pwindicator">
-                        <div class="bar"></div>
-                        <div class="label"></div>
-                      </div>
-                    </div>
-                    <div class="form-group col-6">
-                      <label for="password2" class="d-block">Password Confirmation</label>
-                      <input id="password2" type="password" class="form-control" name="password-confirm">
+                  <div class="form-group">
+                    <label for="email">{register_email}</label>
+                    <input required id="email" type="email" class="form-control" name="email">
+                    <div class="invalid-feedback">
                     </div>
                   </div>
 
                   <div class="form-divider">
-                    Your Home
+                    {register_y_country}
                   </div>
                   <div class="row">
                     <div class="form-group col-6">
-                      <label>Country</label>
-                      <select class="form-control selectric">
-                        <option>Indonesia</option>
-                        <option>Palestine</option>
-                        <option>Syria</option>
-                        <option>Malaysia</option>
-                        <option>Thailand</option>
-                      </select>
+                      <label for="country">{register_country}</label>
+                      <input required id="country" type="country" class="form-control" name="country">
+                      <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-group col-6">
-                      <label>Province</label>
-                      <select class="form-control selectric">
-                        <option>West Java</option>
-                        <option>East Java</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="form-group col-6">
-                      <label>City</label>
-                      <input type="text" class="form-control">
-                    </div>
-                    <div class="form-group col-6">
-                      <label>Postal Code</label>
-                      <input type="text" class="form-control">
+                      <label for="province">{register_prov}</label>
+                      <input required id="province" type="province" class="form-control" name="province">
+                      <div class="invalid-feedback"></div>
                     </div>
                   </div>
 
                   <div class="form-group">
                     <div class="custom-control custom-checkbox">
-                      <input type="checkbox" name="agree" class="custom-control-input" id="agree">
-                      <label class="custom-control-label" for="agree">I agree with the terms and conditions</label>
+                      <input required type="checkbox" name="agree" class="custom-control-input" id="agree">
+                      <label class="custom-control-label" for="agree">{register_agree}</label>
                     </div>
                   </div>
 
                   <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-lg btn-block">
-                      Register
+                      {register}
                     </button>
                   </div>
                 </form>
